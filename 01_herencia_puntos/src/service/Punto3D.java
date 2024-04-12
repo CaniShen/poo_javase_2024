@@ -20,8 +20,19 @@ public class Punto3D extends Punto {
 	public void setZ(int z) {
 		this.z = z;
 	}
-	public void imprimir(String r) { //método--sobrecarga
-		
+//	public void imprimir(String r) { //método--sobrecarga
+//		
+//	}
+//	@Override
+//	public void imprimir() {
+//		System.out.println("Las coordinadas son: "+getX()+","+getY()+","+z);
+//	}
+
+	@Override
+	public void imprimir() {
+		// TODO Auto-generated method stub
+		super.imprimir();//llamar al metodo original, y añadiando algo mas.
+		System.out.println(","+z);
 	}
 	
 }
