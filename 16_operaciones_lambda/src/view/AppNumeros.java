@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import interfaces.Condicion;
 import service.OperacionesService;
@@ -74,7 +75,15 @@ public class AppNumeros {
 		}, n->n<0);
 	}
 	
-	
-
+	//método que recibe una lista y devuelve la suma de todos los elementos de la lista, añadiendo el valor que se extraiga de un fichero
+	//método que recibe una lista y devuelve la suma de todos los elementos de la lista, a le añadimos un número léido desde un puerto externo 
+	public int sumaConExtra(List<Integer> numeros, Supplier<Integer> sup) {
+		int suma=0;
+		for(Integer n:numeros) {
+			suma+=n;
+		}
+		suma+=sup.get();
+		return suma;
+	}
 	
 }
