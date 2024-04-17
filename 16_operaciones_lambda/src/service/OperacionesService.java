@@ -1,6 +1,9 @@
 package service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import interfaces.Condicion;
 
@@ -44,10 +47,10 @@ public class OperacionesService {
 	//devuelve la suma de los números que cumplen esa condición
 	
 	
-	public int sumaPorCondicion(List<Integer> numeros,Condicion condicion) {
+	public int sumaPorCondicion(List<Integer> numeros,Predicate<Integer> predicate) {
 		int suma=0;
 		for(Integer n:numeros) {
-			if(condicion.test(n)) {
+			if(predicate.test(n)) {
 				suma+=n;
 			}
 		}
@@ -55,4 +58,20 @@ public class OperacionesService {
 		
 		
 	}
+	public void gestionaNumeros(Collection<Integer>numeros,
+								Consumer<Integer>operacion,
+								Predicate<Integer>condicion) {// un método no se devuelve nada, son tres parametros, 
+		for (Integer n:numeros) {
+			if(condicion.test(n)){
+				operacion.accept(n);
+			}
+
+		}
+		
+	}
+	
+		 //método que recibe una lista de números e imprime los pares
+		//método que recibe un conjunto de números y guarda en un fichero los positivos
+		//método que recibe una lista y guarda en un fichero los múltiplos de cinco
+		//método que recibe un conjunto de números e imprime los negativos 
 }

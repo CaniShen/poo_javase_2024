@@ -22,7 +22,7 @@ public class Test {
 		lst.add(20);
 		lst.add(17);
 		lst.eliminarNums(new Impares());
-		lst.transformarNumeros(new RaizCuadrado());
+		lst.transformarNumeros( n->(int)Math.sqrt(n));
 		System.out.println(lst.first());
 		System.out.println(lst.last());
 		System.out.println(lst.sum());
