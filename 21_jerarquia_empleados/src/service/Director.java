@@ -1,27 +1,44 @@
 package service;
 
 import java.time.LocalDate;
-
-import model.Empleado;
+import java.time.Period;
 
 public class Director extends Empleado {
 	private String departamento;
 	private int personal;
-	public Director(String nombre, int edad, LocalDate fechaIngreso, double salario) {
+	public Director(String nombre, int edad, LocalDate fechaIngreso, double salario, String departamento,
+			int personal) {
 		super(nombre, edad, fechaIngreso, salario);
-		// TODO Auto-generated constructor stub
+		this.departamento = departamento;
+		this.personal = personal;
 	}
+	
+	public String getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+
+	public int getPersonal() {
+		return personal;
+	}
+
+	public void setPersonal(int personal) {
+		this.personal = personal;
+	}
+
 	@Override
 	public void incentivar() {
-	/*if (mas 30 años && >20 ) {
-		//se le incrementará su salario con el doble del bono.salario+=bono*2;
-	}*/
-	/*if (mas 30 años or >20) {
-		//se le incrementará su salario con el bono
-		
+		Period p=Period.between(getFechaIngreso(), LocalDate.now());
+		int month=p.getMonths();
+		if(month>30&&personal>20) {
+			this.setSalario(this.getSalario()+this.getBono()*2);
+		}
+		else if(month>30||personal>20){
+			this.setSalario(this.getSalario()+this.getBono());
+		}		
 	}
-	else break;
-	}*/
-
-}
+	
 }

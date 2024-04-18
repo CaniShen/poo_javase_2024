@@ -1,8 +1,7 @@
 package service;
 
 import java.time.LocalDate;
-
-import model.Empleado;
+import java.time.Period;
 
 public class Operario extends Empleado {
 	private int nivel;
@@ -11,17 +10,38 @@ public class Operario extends Empleado {
 		super(nombre, edad, fechaIngreso, salario);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Operario(String nombre, int edad, LocalDate fechaIngreso, double salario, int nivel) {
+		super(nombre, edad, fechaIngreso, salario);
+		this.nivel = nivel;
+	}
+
+	public int getNivel() {
+		return nivel;
+	}
+
+	public void setNivel(int nivel) {
+		this.nivel = nivel;
+	}
 
 	@Override
 	public void incentivar() {
-		/*Si tiene más de 30 años y su nivel es superior a 2, se le incrementará su salario con el doble del
-		bono. Si cumple solo una de las condiciones anteriores, se le incrementará su salario con el
-		bono y si no cumple ninguna, no se hará nada.
+		Period p=Period.between(getFechaIngreso(), LocalDate.now());
+		int year=p.getYears();
+		if(year>30 && this.nivel>2) {
+			this.setSalario(this.getSalario()+this.getBono()*2);
+		}else if(year>30 ||this.nivel>2) {
+			this.setSalario(this.getSalario()+this.getBono());
+		}
 
-		Dispondrá además de un método actualizarNivel(), que en caso de que el empleado lleve más
-		de dos años en la empresa se le subirá un nivel de seguridad. Si ya está en nivel 5 no se hará
-		nada*/
-
+	}
+	
+	public void actualizarNivel() {
+		Period p=Period.between(getFechaIngreso(), LocalDate.now());
+		int year=p.getYears();
+		if(year>2 && this.nivel<5) {
+			nivel++;
+		}
 	}
 
 }
