@@ -1,4 +1,4 @@
-package service;
+package empresa;
 
 import java.time.LocalDate;
 
@@ -7,7 +7,7 @@ public abstract class Empleado {
 		private int edad;
 		private LocalDate fechaIngreso;
 		private double salario;
-		final private double bono=600.00;
+		public static final int BONO=600; //Constante suele ser static y public
 		public Empleado(String nombre, int edad, LocalDate fechaIngreso, double salario) {
 			super();
 			this.nombre = nombre;
@@ -40,9 +40,7 @@ public abstract class Empleado {
 			this.salario = salario;
 		}
 	public abstract void incentivar();
-	public double getBono() {
-		return bono;
-	}
+
 		
 		
 }

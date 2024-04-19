@@ -32,4 +32,7 @@ public class ProductoService {
 		return productos;
 		
 	}
+	public void ordenarPorPrecio() {
+		productos.sort((a, b) -> (Double.compare(a.getPrecio(), b.getPrecio())));
+	}
 }

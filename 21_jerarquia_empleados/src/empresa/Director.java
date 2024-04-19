@@ -1,4 +1,4 @@
-package service;
+package empresa;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -31,13 +31,13 @@ public class Director extends Empleado {
 
 	@Override
 	public void incentivar() {
-		Period p=Period.between(getFechaIngreso(), LocalDate.now());
-		int month=p.getMonths();
-		if(month>30&&personal>20) {
-			this.setSalario(this.getSalario()+this.getBono()*2);
+		Period p=Period.between(getFechaIngreso(), LocalDate.now().plusDays(1));
+		//if(period.toTotalMonths()>30&&this.getPersonal()>20){
+		if(p.toTotalMonths()>30&&personal>20) {
+			this.setSalario(this.getSalario()+Empleado.BONO*2);
 		}
-		else if(month>30||personal>20){
-			this.setSalario(this.getSalario()+this.getBono());
+		else if(p.toTotalMonths()>30||personal>20){
+			this.setSalario(this.getSalario()+Empleado.BONO);
 		}		
 	}
 	
