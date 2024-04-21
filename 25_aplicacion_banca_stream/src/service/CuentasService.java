@@ -38,5 +38,12 @@ public class CuentasService {
 	}
 	
 	//metodo que a partir de una fecha, nos indique cuantas 
-	//cuentas se crearon a aprtir de dicha fecha
+	//cuentas se crearon a partir de dicha fecha
+	
+	public long cuentasPorFecha(LocalDate fechaApertura)  {
+		return cuentas.stream()
+				.filter(c->c.getFechaApertura().isAfter(fechaApertura))
+				.count();
+		
+	}
 }

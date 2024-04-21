@@ -2,6 +2,8 @@ package testing;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -25,5 +27,8 @@ class TestCuentasService {
 	void testCuentasPorDivisa() {
 		assertEquals(2, service.cuentasPorDivisa("EUR"));
 	}
-
+	@Test
+	void testcuentasPorFecha() {
+		assertEquals(2, service.cuentasPorFecha(LocalDate.parse("1999-10-07")));
+	}
 }
