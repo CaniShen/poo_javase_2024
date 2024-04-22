@@ -1,10 +1,12 @@
 package service;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import model.Pedido;
@@ -27,7 +29,7 @@ public class PedidoService {
 		pedidos.add(pedido);		
 	}
 	
-	public List<Pedido> pedidoMasReciente() {
+	public Pedido pedidoMasReciente() {
 		/*Pedido pAxu=null;   ///=new Pedido();
 		LocalDate fMax=LocalDate.of(0, 1, 1); // 1/1/1970
 		for(Pedido p:pedidos) {
@@ -41,18 +43,16 @@ public class PedidoService {
 		return pAxu;*/
 		/*return pedidos.stream()
 				.collect(Collectors.filtering(p->p.fechaPedido.isAfter(p.fechaPedido), Collectors.toList()));*/
-//		return pedidos.stream()//Stream <Pedido>
-//				//.max(Comparator.comparing(p->p.getFechaPedido()))
-//				.max((a,b)->a.getFechaPedido().compareTo(b.getFechaPedido())
-//				.;
-		return null;
+		return pedidos.stream()//Stream <Pedido>
+				//.max(Comparator.comparing(p->p.getFechaPedido()))
+				.max((a,b)->a.getFechaPedido().compareTo(b.getFechaPedido())).get();
+				
 	
 	}
 		 						
 										
-		
 	
-	public ArrayList<Pedido> pedidoEntreFechas (LocalDate f1, LocalDate f2) {
+	public List<Pedido> pedidoEntreFechas (LocalDate f1, LocalDate f2) {
 		/*ArrayList<Pedido> aux=new ArrayList<Pedido>();
 		for(Pedido p:pedidos) {
 			//si fecha del pedido es posterior o igual a f1 y anterior o igual a f2. se incluye 
@@ -61,7 +61,20 @@ public class PedidoService {
 			}
 		}
 		return aux;*/
-		return null;
+		return  pedidos.stream()//Stream <Pedido>
+				.filter(p -> p.getFechaPedido().isAfter(f1) && p.getFechaPedido().isBefore(f2))
+				.toList();
 				
 }
+	public Optional<Pedido> muestraPedidoCercaFecha(LocalDate f3) {
+		return pedidos.stream()
+				.min((a,b)->Long.compare(Math.abs(ChronoUnit.DAYS.between(f3,a.getFechaPedido())),
+				Math.abs(ChronoUnit.DAYS.between(f3,b.getFechaPedido()))));
+				
+	}
+	
+	
+	
 }
+
+

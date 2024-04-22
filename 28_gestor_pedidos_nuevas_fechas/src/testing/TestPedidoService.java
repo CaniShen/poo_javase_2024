@@ -41,5 +41,11 @@ class TestPedidoService {
 		LocalDate fmax=LocalDate.of(2022,12,31);
 		assertEquals(2,service.pedidoEntreFechas(fmin, fmax).size());
 	}
+	@Test
+	void testmuestraPedidoCercaFecha() {
 
+		assertEquals("coca cola",service.muestraPedidoCercaFecha(LocalDate.of(2023,12,7)).get().getProducto());
+		assertEquals("patatas fritas",service.muestraPedidoCercaFecha(LocalDate.of(2022,8,7)).get().getProducto());
+		
+	}
 }
