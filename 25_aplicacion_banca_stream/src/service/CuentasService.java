@@ -2,7 +2,11 @@ package service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import model.Cuenta;
 
@@ -44,6 +48,60 @@ public class CuentasService {
 		return cuentas.stream()
 				.filter(c->c.getFechaApertura().isAfter(fechaApertura))
 				.count();
+		
+	}
+	//metodo que te devuelva a cuenta asociada a un determinado número
+	
+	public Cuenta buscarCuenta(String numero) {
+		return cuentas.stream()
+				.filter(c->c.getNumeroCuenta().equals(numero))//Stream<Sring>
+				.findFirst()//Optional<cuenta>
+				.orElse(null);
+	}
+	
+	//metodo que te devuelva a cuenta asociada a un determinado titlar
+	
+	public Optional<Cuenta> buscarCuentaPorTitular(String numero) {
+		return cuentas.stream()
+				.filter(c->c.getNumeroCuenta().equals(numero))//Stream<Sring>
+				.findFirst();//Optional<cuenta>
+				
+	}
+	//método que devuelva la cuenta con menor saldo
+	
+	public Cuenta buscarCuentaMenorSaldo() {
+		/*return cuentas.stream()
+				.sorted((a,b)->Double.compare(a.getSaldo(),b.getSaldo()))
+				.findFirst()//Optional<Cuenta>
+				.orElse(null);*/
+		/*return cuentas.stream()
+				.min((a,b)->Double.compare(a.getSaldo(), b.getSaldo()))
+				.orElse(null);*/
+		return cuentas.stream()
+				.min(Comparator.comparingDouble(c->c.getSaldo()))
+				.orElse(null);
+		
+	}
+	//método 
+	public List<Cuenta> listaCuentaPorDivisa(String divisa) {
+		return cuentas.stream()
+				.filter(c->c.getDivisa().equalsIgnoreCase(divisa))//Stream<String>
+				//.collect(Collectors.toList());//Optional<cuenta>
+				.toList();//desde JAVA 16
+	}
+	
+	//metodo que devuelva un Map con los numeros de cuenta con claves 
+	//y saldo como valor
+	public Map<String,Double> cuentasSaldo() {
+		return cuentas.stream()
+				.collect(Collectors.toMap(c->c.getNumeroCuenta(), c->c.getSaldo()));
+	}
+	
+	//método que devuelve una tabla de cuentas agrupadas por divisa:
+	
+	public Map<String,List<Cuenta>> cuentasporDivisas() {
+		return cuentas.stream()
+				.collect(Collectors.groupingBy(c->c.getDivisa()));
 		
 	}
 }

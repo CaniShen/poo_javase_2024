@@ -34,7 +34,7 @@ class TestOperador {
 	}
 	@Test
 	void testActualizarNivel2() {
-		Operario operario=new Operario("c",31,LocalDate.now().minusMonths(24),1000,5);
+		Operario operario=new Operario("c",31,LocalDate.now().minusMonths(25),1000,5);
 		operario.actualizarNivel();
 		assertEquals(5,operario.getNivel());
 	}

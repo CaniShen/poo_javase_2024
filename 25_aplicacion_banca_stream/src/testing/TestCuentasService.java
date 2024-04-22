@@ -31,4 +31,8 @@ class TestCuentasService {
 	void testcuentasPorFecha() {
 		assertEquals(2, service.cuentasPorFecha(LocalDate.parse("1999-10-07")));
 	}
+	@Test
+	void testcuentasAgrupadasPorDivisa() {
+		assertEquals(2,service.cuentasporDivisas().get("JPY").size());
+	}
 }
