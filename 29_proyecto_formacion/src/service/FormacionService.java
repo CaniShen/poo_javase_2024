@@ -4,9 +4,11 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -133,24 +135,42 @@ public class FormacionService {
 		 
 	// nota media de un curso
 	public double notaMediaCurso(String nombreCurso) {
+
 		return cursos.stream()
-				.filter(c->c.getNombre().equals(nombreCurso))
-				.;
+        .filter(c->c.getNombre().equals(nombreCurso))
+        .flatMap(c -> c.getAlumnos().stream())
+        .mapToDouble(a -> a.getNota())
+        .average()
+        .getAsDouble();
 		
 	}
 
 	//lista con los nombres de todos los alumnos
 	public List<String> nombresAlumnos() {
-		return cursos.stream()
-				.flatMap(c->List.stream(c.getAlumnos());
-				
-				
-				
+		return cursos.stream() //Stream<Curso>
+				.flatMap(c->c.getAlumnos().stream())
+				.map(a->a.getNombre())
+				.toList(); 
+							
 	}
 		 
  //lista de alumnos matriculados en cursos de determinada temática
-		 
-	//alumno con mayor nota
+	public List<Alumno> alumnosMatriculadosTematica(String tematica) {
+		return cursos.stream()
+				.filter(c -> c.getTematica().equalsIgnoreCase(tematica))
+				.flatMap(c -> c.getAlumnos().stream())
+				.toList();
 	
+		
+	}
+	//alumno con mayor nota
+	public Optional<Alumno> alumnoMayorNota() {
+
+		return cursos.stream()
+        .flatMap(c -> c.getAlumnos().stream())
+        .max(Comparator.comparingDouble(a->a.getNota()));
+		
+	}
+
 	
 }
