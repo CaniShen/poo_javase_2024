@@ -77,12 +77,13 @@ public class PedidoView {
 	
 
 	static void pedidoMasReciente() {
-		Pedido p = service.pedidoMasReciente();
-		DateTimeFormatter sdf=DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		System.out.print("Producto: " + p.getProducto() + " ");
-		System.out.print("Unidades: " + p.getUnidades() + " ");
-		System.out.println("Fecha pedido: " + p.getFechaPedido().format(sdf) + " ");
+		service.pedidoMasReciente().ifPresentOrElse(p -> {
+			DateTimeFormatter sdf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			System.out.print("Producto: " + p.getProducto() + " ");
+			System.out.print("Unidades: " + p.getUnidades() + " ");
+			System.out.println("Fecha pedido: " + p.getFechaPedido().format(sdf) + " ");
 
+		}, () -> System.out.println("No existen pedidos"));
 	}
 
 	static void pedidoEntreFechas() {

@@ -28,8 +28,15 @@ public class PedidoService {
 	public void nuevoPedido(Pedido pedido) {
 		pedidos.add(pedido);		
 	}
-	
-	public Pedido pedidoMasReciente() {
+	//devuelve el pedido más reciente, pero si hubiera más de uno
+	//que cumpla esa condición (misma fecha), que devuelva el que 
+	//mñás unidades
+	public Optional<Pedido> pedidoMasReciente() {
+		/*Comparator <Pedido> c1=(a,b)->a.getFechaPedido().compareTo(b.getFechaPedido());
+		Comparator<Pedido>  c2=(a,b)->a.getUnidades().compareTo(b.getUnidades());*/
+		return pedidos.stream()//Stream<Pedido>
+				.max(Comparator.comparing((Pedido p)->p.getFechaPedido())
+						.thenComparingInt(p->p.getUnidades()));
 		/*Pedido pAxu=null;   ///=new Pedido();
 		LocalDate fMax=LocalDate.of(0, 1, 1); // 1/1/1970
 		for(Pedido p:pedidos) {
@@ -43,9 +50,9 @@ public class PedidoService {
 		return pAxu;*/
 		/*return pedidos.stream()
 				.collect(Collectors.filtering(p->p.fechaPedido.isAfter(p.fechaPedido), Collectors.toList()));*/
-		return pedidos.stream()//Stream <Pedido>
+		/*return pedidos.stream()//Stream <Pedido>
 				//.max(Comparator.comparing(p->p.getFechaPedido()))
-				.max((a,b)->a.getFechaPedido().compareTo(b.getFechaPedido())).get();
+				.max((a,b)->a.getFechaPedido().compareTo(b.getFechaPedido()));*/
 				
 	
 	}
@@ -70,11 +77,43 @@ public class PedidoService {
 		return pedidos.stream()
 				.min((a,b)->Long.compare(Math.abs(ChronoUnit.DAYS.between(f3,a.getFechaPedido())),
 				Math.abs(ChronoUnit.DAYS.between(f3,b.getFechaPedido()))));
-				
+				//.min(Comparator.comparingLong(p->Math.abs(ChronoUnit.DAYS.between(p.getFechaPedido(), fecha))))
+				//.orElse(null); 
+		
+		
+	}	
+	//devuelve la lista de pedidos del producto recibido como parámetro
+	public List<Pedido> muestraProducto(String producto) {
+			return pedidos.stream()
+					.filter(p->p.getProducto().equalsIgnoreCase(producto))
+					.collect(Collectors.toList());			
+	}
+		
+			
+	//devuelve el pedido como menor número de unidades. Si hay más de uno 
+	//el primero que encuentre
+	public Optional<Pedido> pedidoMenorUnidades() {
+		return pedidos.stream()
+				.min(Comparator.comparingInt(p->p.getUnidades()));
+	}
+	
+	
+	//devuelve una cadena de nombres de todos los productos, sin duplicar, 
+	//separados por un "-"
+	
+	public String nombresProductos() {
+		
+		return pedidos.stream()//Stream<Pedido>
+				.map(p->p.getProducto())//Steram<String>
+				.distinct()//Stream <String>
+				.collect(Collectors.joining("-"));
 	}
 	
 	
 	
+	
+	
 }
+
 
 

@@ -32,7 +32,8 @@ class TestPedidoService {
 
 	@Test
 	void testPedidoMasReciente() {
-		assertEquals("coca cola",service.pedidoMasReciente().getProducto());
+		assertTrue(service.pedidoMasReciente().isPresent());
+		assertEquals("coca cola", service.pedidoMasReciente().get().getProducto());
 	}
 
 	@Test
